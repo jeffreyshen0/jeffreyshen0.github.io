@@ -5,31 +5,38 @@ body {
   box-sizing: border-box;
   color: #000000;
 }
+
 .header {
   text-align: center;
   padding: 1em;
   background-color: #000000;
 }
+
 .nav {
   display: flex;
   justify-content: center;
   background-color: #333;
-  padding: 1em 0;
+  padding: 0.75em 0;
 }
+
 .nav a {
-  color: white;
+  color: rgb(255, 255, 255);
   padding: 0 1em;
   text-decoration: none;
   margin: 0 60px;
+  font-size: 115%;
 }
+
 .nav a:hover {
   color: #ddd;
 }
+
 .section {
   padding: 0.5em;
   text-align: center;
   font-size: 115%;
 }
+
 .footer {
   text-align: center;
   padding: 1em;
@@ -51,6 +58,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.social-button {
+  font-size: 30px; /* Adjust the size of icons */
+  margin: 0 25px;
+  color: #000000;
+  text-decoration: none; /* This removes the underline from links */
+  border: none; /* This ensures that no borders are applied unless specified */
+    /* ... other styles ... */ /* Spacing between icons */
+}
+
+.social-button:hover {
+  color: #555; /* Icon hover color */
 }
 html {
   scroll-behavior: smooth;
