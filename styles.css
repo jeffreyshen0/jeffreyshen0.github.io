@@ -28,11 +28,13 @@ body {
 .section {
   padding: 0.5em;
   text-align: center;
+  font-size: 115%;
 }
 .footer {
   text-align: center;
   padding: 1em;
   background-color: #f2f2f2;
+  font-size: 115%;
 }
 
 .container {
@@ -41,10 +43,15 @@ body {
 
 .container-item {
   width: 50%;
+  font-size: 115%;
+  margin-right: 50px;
 }
 
 .center {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+html {
+  scroll-behavior: smooth;
 }
