@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeffrey Shen - Portfolio</title>
+    <title>Jeffrey Shen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
@@ -23,12 +23,12 @@
         
         <section class="mb-16">
             <div class="flex items-center gap-3 mb-4">
-                <div class="w-6 h-6 bg-green-500 rounded flex items-center justify-center">
-                    <span class="text-black text-xs font-bold">T</span>
+                <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                    <span class="uoft-blue-text text-xs font-bold">T</span>
                 </div>
                 <div>
                     <span class="uoft-blue-text font-semibold">University of Toronto</span>
-                    <span class="text-gray-300 ml-2">Stastistics and Computer Science</span>
+                    <span class="text-gray-200 ml-2">// Stastistics and Computer Science</span>
                 </div>
             </div>
             <p class="text-gray-300 leading-relaxed">
@@ -41,10 +41,6 @@
             <div class="space-y-2">
                 <div class="flex items-center">
                     <span class="text-gray-400 mr-3">–</span>
-                    <span class="text-gray-300">LLM & AI Systems</span>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-gray-400 mr-3">–</span>
                     <span class="text-gray-300">Financial Analysis</span>
                 </div>
                 <div class="flex items-center">
@@ -53,11 +49,15 @@
                 </div>
                 <div class="flex items-center">
                     <span class="text-gray-400 mr-3">–</span>
+                    <span class="text-gray-300">Mathematical Statistics</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-gray-400 mr-3">–</span>
                     <span class="text-gray-300">LLM & CompLinguistics</span>
                 </div>
                 <div class="flex items-center">
                     <span class="text-gray-400 mr-3">–</span>
-                    <span class="text-gray-300">Mathematical Statistics</span>
+                    <span class="text-gray-300">Automotive Computer Vision</span>
                 </div>
             </div>
         </section>
@@ -109,7 +109,7 @@
                     <span class="text-gray-300">Video Games</span>
                 </div>
                 <div class="border border-gray-700 rounded px-4 py-3">
-                    <span class="text-gray-300">Japanese</span>
+                    <span class="text-gray-300">Motorsports</span>
                 </div>
             </div>
         </section>
@@ -131,8 +131,13 @@
                 </a>
             </div>
 
-            <div class="text-white font-mono text-sm">
+            <!-- <div class="text-white font-mono text-sm">
                 <div class="text-xs text-gray-500 mb-1 text-right">EST</div>
+                <div id="clock" class="text-lg"></div>
+            </div> -->
+            
+            <div id="clock-container" class="text-white font-mono text-sm">
+                <div id="timezone-label" class="text-xs text-gray-500 mb-1 text-right">EST</div>
                 <div id="clock" class="text-lg"></div>
             </div>
         </footer>
@@ -146,47 +151,121 @@
         let index = 0;
         let showCursor = true;
 
+        // Timezone functionality
+        let currentTimezone = 'EST';
+        const timezones = {
+            'EST': {
+                zone: 'America/New_York',
+                label: 'EST'
+            },
+            'JST': {
+                zone: 'Asia/Tokyo',
+                label: 'JST'
+            }
+        };
+
+        function blinkCursor() {
+            const cursor = nameElement.querySelector('.cursor');
+            if (cursor) {
+                cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+            }
+            setTimeout(blinkCursor, 500);
+        }
+
+        // Typing function
         function typeWriter() {
             if (index < fullName.length) {
                 displayedName += fullName.charAt(index);
-                nameElement.innerHTML = displayedName + (showCursor ? '<span class="text-green-400">|</span>' : '');
+                nameElement.innerHTML = displayedName + '<span class="cursor text-white-0">|</span>';
                 index++;
                 setTimeout(typeWriter, 150);
+                //call blinkCursor with delay 
             } else {
-                setTimeout(() => {
-                    showCursor = false;
-                    nameElement.innerHTML = displayedName;
-                }, 1000);
+                typingComplete = true;
+                // Cursor continues blinking after typing
+                nameElement.innerHTML = displayedName + '<span class="cursor text-white-0">|</span>';
             }
         }
 
-        // Cursor blinking during typing
-        function blinkCursor() {
-            if (index < fullName.length) {
-                showCursor = !showCursor;
-                nameElement.innerHTML = displayedName + (showCursor ? '<span class="text-green-400">|</span>' : displayedName);
-                setTimeout(blinkCursor, 500);
-            }
-        }
+        // // Clock function
+        // function updateClock() {
+        //     const now = new Date();
+        //     const estTime = now.toLocaleTimeString('en-US', {
+        //         timeZone: 'America/New_York',
+        //         hour12: false,
+        //         hour: '2-digit',
+        //         minute: '2-digit',
+        //         second: '2-digit'
+        //     });
+        //     document.getElementById('clock').textContent = estTime;
+        // }
+
+        // // Start animations
+        // typeWriter();
+        // blinkCursor();
+        // updateClock();
+        // setInterval(updateClock, 1000);
 
         // Clock function
         function updateClock() {
             const now = new Date();
-            const estTime = now.toLocaleTimeString('en-US', {
-                timeZone: 'America/New_York',
+            const timezone = timezones[currentTimezone];
+            const time = now.toLocaleTimeString('en-US', {
+                timeZone: timezone.zone,
                 hour12: false,
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
             });
-            document.getElementById('clock').textContent = estTime;
+            
+            document.getElementById('clock').textContent = time;
+            document.getElementById('timezone-label').textContent = timezone.label;
         }
 
-        // Start animations
-        typeWriter();
-        blinkCursor();
-        updateClock();
-        setInterval(updateClock, 1000);
+        // Toggle timezone function
+        function toggleTimezone() {
+            currentTimezone = currentTimezone === 'EST' ? 'JST' : 'EST';
+            updateClock(); // Update immediately
+            
+            // Add a subtle visual feedback
+            const clockElement = document.getElementById('clock');
+            clockElement.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                clockElement.style.transform = 'scale(1)';
+            }, 150);
+        }
+
+        // Start everything when page loads
+        window.addEventListener('load', function() {
+            // Initialize with cursor
+            nameElement.innerHTML = '<span class="cursor text-white">|</span>';
+            
+            // Start typing after a brief delay
+            setTimeout(() => {
+                typeWriter();
+                blinkCursor();
+            }, 500);
+            
+            // Start clock
+            updateClock();
+            setInterval(updateClock, 1000);
+            
+            // Add click event to clock
+            document.getElementById('clock-container').addEventListener('click', toggleTimezone);
+            
+            // Add hover effect styling
+            const clockContainer = document.getElementById('clock-container');
+            clockContainer.style.cursor = 'pointer';
+            clockContainer.style.transition = 'all 0.2s ease';
+            
+            clockContainer.addEventListener('mouseenter', function() {
+                this.style.opacity = '0.8';
+            });
+            
+            clockContainer.addEventListener('mouseleave', function() {
+                this.style.opacity = '1';
+            });
+        });
     </script>
 </body>
 </html>
